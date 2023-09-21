@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import *
 class GUI(QMainWindow):
     def __init__(self):
         super(GUI, self).__init__()
-        uic.loadUi("C:/Users/Ali Pirzada/Documents/Projects/CourseWork/HomePage.ui", self)
+        uic.loadUi("./HomePage.ui", self)
         self.show()
 
         self.loginb.clicked.connect(self.login)
@@ -28,5 +28,3 @@ def main():
     app.exec_()
 
 main()
-wfgiugfiueb
-#test
