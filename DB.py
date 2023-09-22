@@ -2,7 +2,7 @@ from PyQt5 import QtSql
 import sqlite3
 
 def db_creation():
-    db_path=("C:/Users/Ali Pirzada/Documents/Projects/CourseWork/Flashcard_Project.db")
+    db_path=("./Flashcard_Project.db")
     admin = "admin"
     adminpass = "pass"
     connection = sqlite3.connect(db_path)
