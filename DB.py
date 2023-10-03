@@ -3,7 +3,7 @@ import sqlite3
 db_path=("C:/Users/Ali Pirzada/Documents/Projects/CourseWork/Flashcard_Project.db")
 
 def db_creation():
-    global db_path
+    db_path=("C:/Users/Ali Pirzada/Documents/Projects/CourseWork/Flashcard_Project.db")
     admin = "admin"
     adminpass = "pass"
     connection = sqlite3.connect(db_path)
