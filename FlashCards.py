@@ -17,11 +17,12 @@ class GUI(QMainWindow):
     def __init__(self):
         super().__init__()
         # Load the user interface from the specified file
-        uic.loadUi(r"C:\Users\Ali Pirzada\Documents\Projects\CourseWork\gui.ui" , self)
+        uic.loadUi(r".\gui.ui" , self)
         self.show()
         # Connect buttons to their respective functions
         self.loginb.clicked.connect(self.login)
         self.createuser.clicked.connect(self.newuser)
+        self.__logedIn = False
 
     def login(self):
         # Get the username and password from the input fields
@@ -36,6 +37,7 @@ class GUI(QMainWindow):
             message.exec()
         else:    
             # Connect to the database
+            self.__logedIn = True
             connection = sqlite3.connect("Flashcard_Project.db")
             cursor = connection.cursor()
             # Execute a SELECT query to check if the user exists with the provided username and hashed password
@@ -52,13 +54,16 @@ class GUI(QMainWindow):
                 message.setText("Login failed, please try again")
                 message.exec()
 
+
+
+
     def newuser(self):
         # Get the new username and password from the input fields
         new_user = self.uname.text()
         new_passw = self.passw.text()  
-        # Hash the password
-        pass_hash = hash_password(new_passw)
-        if not new_user or not new_passw:
+        # Validate the new username and password
+        userInputValid = self.newUserValidation(new_user, new_passw)
+        if not userInputValid:
             # Display an error message if either the new username or password is empty
             message=QMessageBox()
             message.setText("Please enter a username or password")
@@ -78,12 +83,25 @@ class GUI(QMainWindow):
                 message.exec()
             else:
                 # Insert the new user into the database
+                pass_hash = hash_password(new_passw) #Password is hashed
+                new_passw = "" #Plaintext password is reset, so cant be read anymore in memory
                 cursor.execute("INSERT INTO Users (username, password) VALUES (?, ?)" , (new_user, pass_hash))
                 connection.commit()
                 # Display a success message for registration
                 message = QMessageBox()
                 message.setText("Registration successful")
                 message.exec()
+
+    def newUserValidation(self,username, password):
+        valid = True
+        if len(username) > 10 or len(username) < 3:
+            valid = False
+        
+        if len(password) <6:
+            valid = False
+        return valid
+
+
 
 # Function to hash a password using SHA-256
 def hash_password(password):
@@ -94,6 +112,12 @@ def main():
     app = QApplication([])
     window = GUI()
     app.exec_()
+
+
+
+
+
+
 
 main()
 
