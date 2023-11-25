@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>loginpage</class>
+ <widget class="QMainWindow" name="loginpage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>620</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -115,6 +115,22 @@
     </property>
     <property name="text">
      <string>New users</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="continueb">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>390</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(167, 170, 167);</string>
+    </property>
+    <property name="text">
+     <string>Continue</string>
     </property>
    </widget>
   </widget>
