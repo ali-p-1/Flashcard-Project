@@ -16,6 +16,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(54, 54, 54);</string>
   </property>
@@ -43,15 +46,30 @@
      </rect>
     </property>
    </widget>
-   <widget class="QListWidget" name="setlist">
+   <widget class="QTableWidget" name="display_sets">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>50</y>
+      <x>410</x>
+      <y>90</y>
       <width>256</width>
       <height>192</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="rowCount">
+     <number>5</number>
+    </property>
+    <property name="columnCount">
+     <number>1</number>
+    </property>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <column/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
