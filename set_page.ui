@@ -26,11 +26,14 @@
    <widget class="QPushButton" name="createb">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>50</y>
+      <x>60</x>
+      <y>30</y>
       <width>121</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Create new set</string>
@@ -39,20 +42,23 @@
    <widget class="QLineEdit" name="newset">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>80</y>
+      <x>210</x>
+      <y>50</y>
       <width>113</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="display_sets">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>90</y>
-      <width>256</width>
-      <height>192</height>
+      <x>390</x>
+      <y>30</y>
+      <width>251</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -70,6 +76,22 @@
     <row/>
     <row/>
     <column/>
+   </widget>
+   <widget class="QPushButton" name="nextb">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>110</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Click to view sets</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
