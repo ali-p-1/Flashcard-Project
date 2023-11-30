@@ -138,7 +138,6 @@ class setpage(QMainWindow):
         self.show()
         self.userid = userid
         self.load_sets(userid)
-        testing = flashcards_page()
 
         self.createb.clicked.connect(self.create_set)
         self.display_sets.setColumnWidth(0, 250)
@@ -201,7 +200,6 @@ class setpage(QMainWindow):
         result = cursor.execute("SELECT front_text , back_text , diff_level FROM Flashcards WHERE set_id = ? ", (setid))
         print(cursor.fetchall())
         testing = flashcards_page(set_name)
-        widget.addWidget(testing)
         widget.setCurrentIndex(3)
 
         cursor.close()
@@ -253,7 +251,7 @@ userid = login.userid
 sets = setpage(userid)
 
 cards = flashcards()
-testing = flashcards_page()
+testing = flashcards_page("bob")
 
 
 widget.addWidget(login)
