@@ -138,6 +138,7 @@ class setpage(QMainWindow):
         self.show()
         self.userid = userid
         self.load_sets(userid)
+        testing = flashcards_page()
 
         self.createb.clicked.connect(self.create_set)
         self.display_sets.setColumnWidth(0, 250)
@@ -180,7 +181,7 @@ class setpage(QMainWindow):
         flashcards_instance = flashcards()
         flashcards_instance.show()
         widget.addWidget(flashcards_instance)
-        widget.setCurrentIndex(2)
+        widget.setCurrentIndex(4)
 
 
     def on_item_clicked(self, item):
@@ -199,7 +200,8 @@ class setpage(QMainWindow):
 
         result = cursor.execute("SELECT front_text , back_text , diff_level FROM Flashcards WHERE set_id = ? ", (setid))
         print(cursor.fetchall())
-        # testing = flashcards_page(self.set_name)
+        testing = flashcards_page(set_name)
+        widget.addWidget(testing)
         widget.setCurrentIndex(3)
 
         cursor.close()
@@ -216,17 +218,15 @@ class flashcards(QMainWindow):
 
 
 
-# class flashcards_page(QMainWindow):
+class flashcards_page(QMainWindow):
 
-#     def __init__(self, set_name):
-#         super().__init__()
-#         uic.loadUi(r".\flashcard_page.ui", self)
+    def __init__(self, set_name):
+        super().__init__()
+        uic.loadUi(r".\flashcard_page.ui", self)
 
-#         self.title.setText(set_name)
-#         self.pushbutton.clicked.connect(card_clicked)
+        self.title.setText(set_name)
 
-#     def card_clicked(self):
-#         print("ok")
+    # def card_clicked(self):
 
 
 
@@ -252,16 +252,15 @@ userid = login.userid
 
 sets = setpage(userid)
 
-# abc = setpage.set_name
-# cards = flashcards()
-# testing = flashcards_page(sets.set_name)
+cards = flashcards()
+testing = flashcards_page()
 
 
 widget.addWidget(login)
 widget.addWidget(sets)
-# widget.addWidget(cards)
+widget.addWidget(cards)
 widget.setCurrentWidget(login)
-# widget.addWidget(testing)
+widget.addWidget(testing)
 
 widget.setFixedSize(800, 600)
 widget.show()
