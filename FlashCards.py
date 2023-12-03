@@ -147,7 +147,6 @@ class setpage(QMainWindow):
         self.display_sets.setHorizontalHeaderLabels(["Set Name"])
         self.nextb.clicked.connect(self.next_page)
         self.display_sets.itemClicked.connect(self.on_item_clicked)
-        self.createb.clicked.connect(self.create_set)
 
         self.get_setname.clicked.connect(self.get_set)
 
@@ -276,22 +275,6 @@ class setpage(QMainWindow):
 
 
 
-        
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
 class flashcards(QMainWindow):
 
     def __init__(self):
@@ -305,7 +288,7 @@ class flashcards_page(QMainWindow):
     def __init__(self, set_name): 
             super().__init__()
             uic.loadUi(r".\flashcard_page.ui", self)
-
+            
 
             self.question.mousePressEvent = self.questionclicked
             self.answer.mousePressEvent = self.answerclicked
@@ -326,7 +309,7 @@ class flashcards_page(QMainWindow):
             self.blist = []
             self.difflist = []
 
-            # self.editb.clicked.connect(self.edit)
+            self.editb.clicked.connect(self.edit)
 
     def questionclicked(self, event):
 
@@ -403,40 +386,54 @@ class flashcards_page(QMainWindow):
             message.exec()
 
 
-    # def edit(self):
+    def edit(self):
+
+        newquestion = self.flist[(self.count - 1)]
+        newanswer =  self.blist[(self.count - 1)]
+        newdiff =  self.difflist[(self.count - 1)]
+        print(self.count - 1)
+
+        title = self.title.text()
 
 
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT set_id FROM Sets WHERE set_name = ?" , (title,))
+        result = cursor.fetchone()
+        result = result[0]
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT flashcard_id FROM Flashcards WHERE front_text = ?" , ((self.flist[(self.count - 1)]),))
+        fid = cursor.fetchone()
+        fid = fid[0]
+        print(fid)
+
+        newquestion = self.question.text()
+        newanswer = self.answer.text()
+        newdiff = self.difflevel.text()
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE Flashcards SET front_text=?, back_text=?, diff_level=? WHERE set_id=? AND flashcard_id = ?", (newquestion, newanswer, newdiff, result, fid)) 
+        connection.commit()
+        connection.close()
+        
 
 
 
 
 
 # spaced repetition algorithm 
-
-# edit flashcards
-
-
-
-
-
-# then split everything each class into different files and create a .bat or .exe file which will run the code
 # get rid of continue button
-# maybe implement a button to switch between pages
+# implement a button to switch between pages
 
 
 # connection = sqlite3.connect("Flashcard_Project.db")
 # cursor = connection.cursor()
-# cursor.execute("INSERT INTO Flashcards (front_text, back_text, diff_level, flashcard_id, set_id) VALUES ('7+', 'tesdtt', 2, 8, 3);")
+# # cursor.execute("INSERT INTO Flashcards (front_text, back_text, diff_level, flashcard_id, set_id) VALUES ('7+', 'tesdtt', 2, 8, 3);")
+# cursor.execute("DELETE FROM Flashcards")
 # connection.commit()
-
-
-
-
-
-
-
-
-
 
 
 app = QApplication(sys.argv)
@@ -445,9 +442,6 @@ login = loginpage()
 userid = login.userid
 sets = setpage(userid)
 cards = flashcards()
-
-
-
 testing = flashcards_page(set_name) 
 
 
@@ -455,9 +449,8 @@ widget.addWidget(login)
 widget.addWidget(sets)
 widget.addWidget(cards)
 widget.setCurrentWidget(login)
-
-
 widget.addWidget(testing) 
+
 
 widget.setFixedSize(800, 600)
 widget.show()
