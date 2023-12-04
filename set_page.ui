@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>616</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,8 +42,8 @@
    <widget class="QLineEdit" name="newset">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>30</y>
+      <x>210</x>
+      <y>50</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -55,10 +55,10 @@
    <widget class="QTableWidget" name="display_sets">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>0</y>
+      <x>390</x>
+      <y>30</y>
       <width>251</width>
-      <height>251</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -80,8 +80,8 @@
    <widget class="QPushButton" name="nextb">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>70</y>
+      <x>60</x>
+      <y>110</y>
       <width>121</width>
       <height>23</height>
      </rect>
@@ -91,116 +91,6 @@
     </property>
     <property name="text">
      <string>Click to view sets</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="display_flashcards">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>270</y>
-      <width>251</width>
-      <height>321</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="rowCount">
-     <number>5</number>
-    </property>
-    <property name="columnCount">
-     <number>2</number>
-    </property>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <column/>
-    <column/>
-   </widget>
-   <widget class="QLineEdit" name="newquestion">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>290</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="newanswer">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>330</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="createcardb">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>290</y>
-      <width>121</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>Create new card</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="get_setname">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>250</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>What is the set name</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="set">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>250</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="difflevel">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>360</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
    </widget>
   </widget>

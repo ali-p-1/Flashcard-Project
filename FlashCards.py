@@ -157,7 +157,7 @@ class setpage(QMainWindow):
 
 
 
-        
+
 
 
 
@@ -203,7 +203,7 @@ class setpage(QMainWindow):
         col = item.column()
         self.selectedset = item.text()
         set_name = item.text()
-        
+
 
         connection = sqlite3.connect("Flashcard_Project.db")
         cursor = connection.cursor()
@@ -288,7 +288,7 @@ class flashcards_page(QMainWindow):
     def __init__(self, set_name): 
             super().__init__()
             uic.loadUi(r".\flashcard_page.ui", self)
-            
+
 
             self.question.mousePressEvent = self.questionclicked
             self.answer.mousePressEvent = self.answerclicked
@@ -360,7 +360,7 @@ class flashcards_page(QMainWindow):
             difforder = list(zip(front, back, diff))
             sorted_flashcards = sorted(difforder, key=lambda x: int(x[2]))
             return zip(*sorted_flashcards)
-            
+
             # lvl1 = []
             # lvl2 = []
             # lvl3 = []
@@ -384,7 +384,7 @@ class flashcards_page(QMainWindow):
             # connection.commit()
             # connection.close()
 
-            
+
 
 
         for i in range (len(back)):
@@ -392,13 +392,13 @@ class flashcards_page(QMainWindow):
             self.blist.append(" ".join(map(str, back[i])))
             self.flist.append(" ".join(map(str, front[i])))
             self.difflist.append(" ".join(map(str,diff[i])))
-            
+
 
         self.flist, self.blist, self.difflist = sort_flashcards(self.flist, self.blist, self.difflist)
 
 
-        
- 
+
+
 
         if self.count < len(self.flist):
 
@@ -462,7 +462,7 @@ class flashcards_page(QMainWindow):
         cursor.execute("UPDATE Flashcards SET front_text=?, back_text=?, diff_level=? WHERE set_id=? AND flashcard_id = ?", (newquestion, newanswer, newdiff, result, fid)) 
         connection.commit()
         connection.close()
-        
+
 
 
 
