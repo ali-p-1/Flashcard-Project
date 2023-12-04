@@ -466,7 +466,7 @@ class flashcards_page(QMainWindow):
 
 
 
-
+ #test
 # add validation for diff level
 # spaced repetition algorithm 
 
