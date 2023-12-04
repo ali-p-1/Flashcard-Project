@@ -305,6 +305,11 @@ class flashcards_page(QMainWindow):
             self.difflevel.setText("NA")
             self.count = 0
 
+
+            self.lvl1 = []
+            self.lvl2 = []
+            self.lvl3 = []
+
             self.flist = []
             self.blist = []
             self.difflist = []
@@ -351,11 +356,49 @@ class flashcards_page(QMainWindow):
 
 
 
+        def sort_flashcards(front, back, diff):
+            difforder = list(zip(front, back, diff))
+            sorted_flashcards = sorted(difforder, key=lambda x: int(x[2]))
+            return zip(*sorted_flashcards)
+            
+            # lvl1 = []
+            # lvl2 = []
+            # lvl3 = []
+            # newlist = []
+
+            # connection = sqlite3.connect("Flashcard_Project.db")
+            # cursor = connection.cursor()
+            # cursor.execute ("SELECT front_text, back_text, diff_level FROM Flashcards WHERE set_id = ? AND diff_level = 3" , (set_id))   
+            # lvl3 = cursor.fetchall()
+
+            # connection = sqlite3.connect("Flashcard_Project.db")
+            # cursor = connection.cursor()
+            # cursor.execute ("SELECT front_text, back_text, diff_level FROM Flashcards WHERE set_id = ? AND diff_level = 2" , (set_id))   
+            # lvl2 = cursor.fetchall()
+
+            # connection = sqlite3.connect("Flashcard_Project.db")
+            # cursor = connection.cursor()
+            # cursor.execute ("SELECT front_text, back_text, diff_level FROM Flashcards WHERE set_id = ? AND diff_level = 1" , (set_id))   
+            # lvl1 = cursor.fetchall()
+
+            # connection.commit()
+            # connection.close()
+
+            
+
+
         for i in range (len(back)):
 
             self.blist.append(" ".join(map(str, back[i])))
             self.flist.append(" ".join(map(str, front[i])))
             self.difflist.append(" ".join(map(str,diff[i])))
+            
+
+        self.flist, self.blist, self.difflist = sort_flashcards(self.flist, self.blist, self.difflist)
+
+
+        
+ 
 
         if self.count < len(self.flist):
 
@@ -369,6 +412,7 @@ class flashcards_page(QMainWindow):
             message = QMessageBox()
             message.setText("End of set")
             message.exec()
+
 
 
     def previouscard(self):
@@ -423,8 +467,9 @@ class flashcards_page(QMainWindow):
 
 
 
-
+# add validation for diff level
 # spaced repetition algorithm 
+
 # get rid of continue button
 # implement a button to switch between pages
 
@@ -432,7 +477,7 @@ class flashcards_page(QMainWindow):
 # connection = sqlite3.connect("Flashcard_Project.db")
 # cursor = connection.cursor()
 # # cursor.execute("INSERT INTO Flashcards (front_text, back_text, diff_level, flashcard_id, set_id) VALUES ('7+', 'tesdtt', 2, 8, 3);")
-# cursor.execute("DELETE FROM Flashcards")
+# cursor.execute("DELETE FROM Sets")
 # connection.commit()
 
 
