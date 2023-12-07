@@ -30,28 +30,7 @@ def user_Table():
     cursor.close()
     connection.close()
 
-# def folder_table():
-#     # Connect to the database
-#     connection = sqlite3.connect(db_path)
-#     cursor = connection.cursor()
 
-#     # Folder Table
-#     create_folderTable = """
-#         -- Create the Folders table if it doesn't exist
-#         CREATE TABLE IF NOT EXISTS Folders (
-#             folder_name TEXT NOT NULL,
-#             folder_id INTEGER PRIMARY KEY,
-#             user_id INTEGER,
-#             -- Reference the Users table for user_id
-#             FOREIGN KEY (user_id) REFERENCES Users (user_id)
-#         )
-#     """
-#     cursor.execute(create_folderTable)
-
-#     # Commit changes and close the connection
-#     connection.commit()
-#     cursor.close()
-#     connection.close()
 
 def set_table():
     # Connect to the database
@@ -104,7 +83,6 @@ def flashcards_table():
 def create_database():
     # Create all required tables
     user_Table()
-    # folder_table()
     set_table()
     flashcards_table()
 
