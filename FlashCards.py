@@ -1,11 +1,13 @@
 import PyQt5 as py
-import sys
-import sqlite3
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import *
-import hashlib
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, Qt
 from PyQt5.QtCore import Qt
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import *
+
+import sys
+import sqlite3
+import hashlib
+from datetime import datetime, timedelta
 
 
 try:
@@ -15,13 +17,13 @@ except:
     pass
 
 
+
 global set_name
 set_name = "None"
 
 
 
 class loginpage(QMainWindow):
-
 
     def __init__(self):
         super().__init__()
@@ -38,9 +40,7 @@ class loginpage(QMainWindow):
         self.__loggedIn = False
 
 
-
     def connect(self):
-
         if self.__loggedIn == True:
             QApplication.instance().quit()
             from set_page import setpage
@@ -52,7 +52,6 @@ class loginpage(QMainWindow):
 
 
     def login(self):
-        
         user = self.uname.text()
         passw = self.passw.text()
         pass_hash = hash_password(passw)
@@ -68,6 +67,7 @@ class loginpage(QMainWindow):
             cursor.execute(
                 "SELECT * FROM Users WHERE username = ? AND password = ?", (user, pass_hash))
             result = cursor.fetchone()
+
 
             if result is not None:
                 self.__loggedIn = True
@@ -95,6 +95,7 @@ class loginpage(QMainWindow):
                 message = QMessageBox()
                 message.setText("Login failed, please try again")
                 message.exec()
+
 
     def newuser(self):
         new_user = self.uname.text()
@@ -129,6 +130,7 @@ class loginpage(QMainWindow):
                 message.setText("Registration successful")
                 message.exec()
 
+
     def newUserValidation(self, username, password):
         valid = True
         if len(username) > 10 or len(username) < 3:
@@ -141,6 +143,8 @@ class loginpage(QMainWindow):
 def hash_password(password):
     pass_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
     return pass_hash
+
+
 
 
 class setpage(QMainWindow):
@@ -162,6 +166,7 @@ class setpage(QMainWindow):
         self.createcardb.clicked.connect(self.flashcardcreation)
         self.setid = 0
 
+
     def load_sets(self, userid):
         connection = sqlite3.connect("Flashcard_Project.db")
         cursor = connection.cursor()
@@ -180,6 +185,7 @@ class setpage(QMainWindow):
         cursor.close()
         connection.close()
 
+
     def create_set(self):
         set_name = self.newset.text()
         connection = sqlite3.connect("Flashcard_Project.db")
@@ -190,11 +196,13 @@ class setpage(QMainWindow):
         cursor.close()
         connection.close()
 
+
     def next_page(self):
         flashcards_instance = flashcards()
         flashcards_instance.show()
         widget.addWidget(flashcards_instance)
         widget.setCurrentIndex(4)
+
 
     def on_item_clicked(self, item):
         global set_name
@@ -218,6 +226,7 @@ class setpage(QMainWindow):
 
         cursor.close()
         connection.close()
+
 
     def flashcardcreation(self):
         question = self.newquestion.text()
@@ -249,6 +258,7 @@ class setpage(QMainWindow):
             connection.commit()
             connection.close()
 
+
     def get_set(self):
 
         set_name = self.set.text()
@@ -275,11 +285,15 @@ class setpage(QMainWindow):
             connection.close()
 
 
+
+
 class flashcards(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.show()
+
+
 
 
 class flashcards_page(QMainWindow):
@@ -301,9 +315,13 @@ class flashcards_page(QMainWindow):
         self.difflevel.setText("NA")
         self.count = 0
 
-        self.lvl1 = []
-        self.lvl2 = []
-        self.lvl3 = []
+        self.correct.clicked.connect(self.correct_ans)
+        self.incorrect.clicked.connect(self.incorrect_ans)
+
+
+        self.start_time = None
+        self.start.clicked.connect(self.spacedAlgo)
+
 
         self.flist = []
         self.blist = []
@@ -311,14 +329,17 @@ class flashcards_page(QMainWindow):
 
         self.editb.clicked.connect(self.edit)
 
+
     def questionclicked(self, event):
 
         self.answer.raise_()
         self.difflevel.raise_()
 
+
     def answerclicked(self, event):
 
         self.question.raise_()
+
 
     def nextcard(self):
 
@@ -352,33 +373,12 @@ class flashcards_page(QMainWindow):
         diff = cursor.fetchall()
         self.difflist = []
 
+
         def sort_flashcards(front, back, diff):
             difforder = list(zip(front, back, diff))
             sorted_flashcards = sorted(difforder, key=lambda x: int(x[2]))
             return zip(*sorted_flashcards)
 
-            # lvl1 = []
-            # lvl2 = []
-            # lvl3 = []
-            # newlist = []
-
-            # connection = sqlite3.connect("Flashcard_Project.db")
-            # cursor = connection.cursor()
-            # cursor.execute ("SELECT front_text, back_text, diff_level FROM Flashcards WHERE set_id = ? AND diff_level = 3" , (set_id))
-            # lvl3 = cursor.fetchall()
-
-            # connection = sqlite3.connect("Flashcard_Project.db")
-            # cursor = connection.cursor()
-            # cursor.execute ("SELECT front_text, back_text, diff_level FROM Flashcards WHERE set_id = ? AND diff_level = 2" , (set_id))
-            # lvl2 = cursor.fetchall()
-
-            # connection = sqlite3.connect("Flashcard_Project.db")
-            # cursor = connection.cursor()
-            # cursor.execute ("SELECT front_text, back_text, diff_level FROM Flashcards WHERE set_id = ? AND diff_level = 1" , (set_id))
-            # lvl1 = cursor.fetchall()
-
-            # connection.commit()
-            # connection.close()
 
         for i in range(len(back)):
 
@@ -386,8 +386,7 @@ class flashcards_page(QMainWindow):
             self.flist.append(" ".join(map(str, front[i])))
             self.difflist.append(" ".join(map(str, diff[i])))
 
-        self.flist, self.blist, self.difflist = sort_flashcards(
-            self.flist, self.blist, self.difflist)
+        self.flist, self.blist, self.difflist = sort_flashcards(self.flist, self.blist, self.difflist)
 
         if self.count < len(self.flist):
 
@@ -402,6 +401,121 @@ class flashcards_page(QMainWindow):
             message.setText("End of set")
             message.exec()
 
+
+
+    def spacedAlgo (self):
+        if self.start_time == None:
+            self.start_time = datetime.now()
+            return
+        
+        time_spent = datetime.now() - self.start_time
+        seconds_spent = time_spent.total_seconds()
+
+        if seconds_spent < 5:
+            current_difficulty = int(self.difflist[self.count - 1]) 
+            new_difficulty = max(1, current_difficulty - 1)
+        elif seconds_spent < 10:
+            new_difficulty = int(self.difflist[self.count - 1])  
+        else:
+            current_difficulty = int(self.difflist[self.count - 1])  
+            new_difficulty = min(5, current_difficulty + 2)
+
+        self.difflevel.setText(str(new_difficulty))
+
+        print("New Diff" , new_difficulty)
+        print("Time = ",seconds_spent)
+
+        title = self.title.text()
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT set_id FROM Sets WHERE set_name = ?", (title,))
+        setid = cursor.fetchone()
+        setid = setid[0]
+
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT flashcard_id FROM Flashcards WHERE front_text = ?", ((
+            self.flist[(self.count - 1)]),))
+        fid = cursor.fetchone()
+        fid = fid[0]
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE Flashcards SET diff_level = ? WHERE set_id = ? AND flashcard_id = ?",
+                       (new_difficulty, setid, fid))
+        connection.commit()
+        connection.close()
+
+
+        self.start_time = None
+
+
+    def correct_ans(self):
+
+        current_difficulty = int(self.difflist[self.count - 1]) 
+        new_difficulty = max(1, current_difficulty - 1)
+ 
+
+        self.difflevel.setText(str(new_difficulty))
+
+        title = self.title.text()
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT set_id FROM Sets WHERE set_name = ?", (title,))
+        setid = cursor.fetchone()
+        setid = setid[0]
+
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT flashcard_id FROM Flashcards WHERE front_text = ?", ((
+            self.flist[(self.count - 1)]),))
+        fid = cursor.fetchone()
+        fid = fid[0]
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE Flashcards SET diff_level = ? WHERE set_id = ? AND flashcard_id = ?",
+                       (new_difficulty, setid, fid))
+        connection.commit()
+        connection.close()
+
+
+    def incorrect_ans(self):
+        
+        current_difficulty = int(self.difflist[self.count - 1]) 
+        new_difficulty = max(1, current_difficulty - 1)
+ 
+
+        self.difflevel.setText(str(new_difficulty))
+
+        title = self.title.text()
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT set_id FROM Sets WHERE set_name = ?", (title,))
+        setid = cursor.fetchone()
+        setid = setid[0]
+
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT flashcard_id FROM Flashcards WHERE front_text = ?", ((
+            self.flist[(self.count - 1)]),))
+        fid = cursor.fetchone()
+        fid = fid[0]
+
+        connection = sqlite3.connect("Flashcard_Project.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE Flashcards SET diff_level = ? WHERE set_id = ? AND flashcard_id = ?",
+                       (new_difficulty, setid, fid))
+        connection.commit()
+        connection.close()
+
+
     def previouscard(self):
 
         if self.count > 0:
@@ -415,12 +529,12 @@ class flashcards_page(QMainWindow):
             message.setText("Beginning of set")
             message.exec()
 
+
     def edit(self):
 
         newquestion = self.flist[(self.count - 1)]
         newanswer = self.blist[(self.count - 1)]
         newdiff = self.difflist[(self.count - 1)]
-        print(self.count - 1)
 
         title = self.title.text()
 
@@ -436,7 +550,6 @@ class flashcards_page(QMainWindow):
             self.flist[(self.count - 1)]),))
         fid = cursor.fetchone()
         fid = fid[0]
-        print(fid)
 
         newquestion = self.question.text()
         newanswer = self.answer.text()
@@ -449,19 +562,10 @@ class flashcards_page(QMainWindow):
         connection.commit()
         connection.close()
 
- # test
-# add validation for diff level
-# spaced repetition algorithm
-
-# get rid of continue button
-# implement a button to switch between pages
 
 
-# connection = sqlite3.connect("Flashcard_Project.db")
-# cursor = connection.cursor()
-# # cursor.execute("INSERT INTO Flashcards (front_text, back_text, diff_level, flashcard_id, set_id) VALUES ('7+', 'tesdtt', 2, 8, 3);")
-# cursor.execute("DELETE FROM Sets")
-# connection.commit()
+
+
 app = QApplication(sys.argv)
 widget = QStackedWidget()
 login = loginpage()
